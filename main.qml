@@ -17,11 +17,12 @@
 
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import QtFeedback 5.0
 import org.asteroid.controls 1.0
 
-Application {
+Item {
     id: app
-    title: "Timer"
+    anchors.fill: parent
 
     ProgressCircle {
         id: circle
@@ -81,6 +82,17 @@ Application {
             }
         }
     }
+    
+    HapticsEffect {
+        id: haptics
+        attackIntensity: 0.0
+        attackTime: 250
+        intensity: 1.0
+        duration: 100
+        fadeTime: 250
+        fadeIntensity: 0.0
+    }
+
     Timer {
         id: timer
         running: false
@@ -89,6 +101,7 @@ Application {
             if(circle.seconds == 0)
             {
                 timer.stop()
+                haptics.start()
                 // TODO: wake up screen and vibrate
             }
             else
