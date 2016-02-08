@@ -19,6 +19,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtFeedback 5.0
 import org.asteroid.controls 1.0
+import org.nemomobile.dbus 1.0
 
 Item {
     id: app
@@ -93,6 +94,16 @@ Item {
         fadeIntensity: 0.0
     }
 
+    property DBusInterface _dbus: DBusInterface {
+        id: dbus
+
+        destination: "com.nokia.mce"
+        path: "/com/nokia/mce/request"
+        iface: "com.nokia.mce.request"
+
+        busType: DBusInterface.SystemBus
+    }
+
     Timer {
         id: timer
         running: false
@@ -102,7 +113,7 @@ Item {
             {
                 timer.stop()
                 haptics.start()
-                // TODO: wake up screen and vibrate
+                dbus.call("req_display_state_on", undefined)
             }
             else
                 circle.seconds = circle.seconds - 1
