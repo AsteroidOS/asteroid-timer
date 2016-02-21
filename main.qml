@@ -83,16 +83,11 @@ Item {
             }
         }
     }
-    
-    HapticsEffect {
-        id: haptics
-        attackIntensity: 0.0
-        attackTime: 250
-        intensity: 1.0
-        duration: 100
-        fadeTime: 250
-        fadeIntensity: 0.0
-    }
+
+    ThemeEffect {
+         id: haptics
+         effect: "Press"
+     }
 
     property DBusInterface _dbus: DBusInterface {
         id: dbus
@@ -112,8 +107,10 @@ Item {
             if(circle.seconds == 0)
             {
                 timer.stop()
-                haptics.start()
+                haptics.play()
                 dbus.call("req_display_state_on", undefined)
+                // TODO: bring window to front
+                // TODO: longer haptic feedback
             }
             else
                 circle.seconds = circle.seconds - 1
