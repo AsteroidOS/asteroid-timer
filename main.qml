@@ -21,9 +21,8 @@ import QtFeedback 5.0
 import org.asteroid.controls 1.0
 import org.nemomobile.dbus 1.0
 
-Item {
+Application {
     id: app
-    anchors.fill: parent
 
     ProgressCircle {
         id: circle
