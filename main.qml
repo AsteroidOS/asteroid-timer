@@ -108,7 +108,7 @@ Application {
                 timer.stop()
                 haptics.play()
                 dbus.call("req_display_state_on", undefined)
-                // TODO: bring window to front
+                window.raise()
             }
             else
                 circle.seconds = circle.seconds - 1
