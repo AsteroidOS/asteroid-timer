@@ -85,7 +85,7 @@ Application {
 
     ThemeEffect {
          id: haptics
-         effect: "Press"
+         effect: "PressStrong"
      }
 
     property DBusInterface _dbus: DBusInterface {
@@ -109,7 +109,6 @@ Application {
                 haptics.play()
                 dbus.call("req_display_state_on", undefined)
                 // TODO: bring window to front
-                // TODO: longer haptic feedback
             }
             else
                 circle.seconds = circle.seconds - 1
