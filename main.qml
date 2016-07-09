@@ -16,7 +16,6 @@
  */
 
 import QtQuick 2.4
-import QtQuick.Controls 1.3
 import QtFeedback 5.0
 import org.asteroid.controls 1.0
 import org.nemomobile.dbus 1.0
@@ -53,7 +52,7 @@ Application {
             }
         }
 
-        Label {
+        Text {
             anchors.centerIn: parent
             font.pixelSize: 40
             text: zeroPad(Math.floor(circle.seconds/60)) + ":" + zeroPad(Math.floor((circle.seconds%60)))
