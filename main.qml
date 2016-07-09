@@ -23,6 +23,9 @@ import org.nemomobile.dbus 1.0
 Application {
     id: app
 
+    property var startDate: 0
+    property int selectedTime: 0
+
     ProgressCircle {
         id: circle
         anchors.fill: parent
@@ -77,7 +80,11 @@ Application {
                 if(timer.running)
                     timer.stop()
                 else
+                {
+                    startDate = new Date
+                    selectedTime = circle.seconds
                     timer.start()
+                }
             }
         }
     }
@@ -102,7 +109,7 @@ Application {
         running: false
         repeat: true
         onTriggered: {
-            if(circle.seconds == 0)
+            if(circle.seconds <= 0)
             {
                 timer.stop()
                 haptics.play()
@@ -110,7 +117,10 @@ Application {
                 window.raise()
             }
             else
-                circle.seconds = circle.seconds - 1
+            {
+                var currentDate = new Date
+                circle.seconds = selectedTime + (startDate.getTime() - currentDate.getTime())/1000
+            }
         }
     }
 }
