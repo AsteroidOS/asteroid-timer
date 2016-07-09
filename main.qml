@@ -37,6 +37,7 @@ Application {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
+            enabled: !timer.running
 
             onPositionChanged: if(mouseArea.pressed) circle.seconds = mouseArea.valueFromPoint(mouseArea.mouseX, mouseArea.mouseY)*30*60;
             onPressed:                               circle.seconds = mouseArea.valueFromPoint(mouseArea.mouseX, mouseArea.mouseY)*30*60;
