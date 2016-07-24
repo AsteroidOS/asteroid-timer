@@ -1,7 +1,9 @@
 [Desktop Entry]
 Type=Application
 Name=Timer
+Name[de_DE]=Timer
 Name[es_ES]=Temporizador
+Name[nl_NL]=Timer
 Categories=Applications;
 Exec=invoker --type=qtcomponents-qt5 /usr/bin/asteroid-timer
 Icon=gnome-clocks
