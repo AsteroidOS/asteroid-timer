@@ -25,67 +25,110 @@ Application {
 
     property var startDate: 0
     property int selectedTime: 0
+    property int seconds: 5*60
 
-    ProgressCircle {
-        id: circle
+    function zeroPad(n) {
+        return (n < 10 ? "0" : "") + n
+    }
+
+    Rectangle {
         anchors.fill: parent
-        _start_angle: -Math.PI*3/2
-        _end_angle: Math.PI/2
-        property int seconds: 120
-        value: seconds/(30*60)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#a64d8b" }
+            GradientStop { position: 1.0; color: "#664d95" }
+        }
+    }
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
+    Row {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height*0.5
+        ListView {
+            id: minuteLV
+            currentIndex: 5
             enabled: !timer.running
-
-            onPositionChanged: if(mouseArea.pressed) circle.seconds = mouseArea.valueFromPoint(mouseArea.mouseX, mouseArea.mouseY)*30*60;
-            onPressed:                               circle.seconds = mouseArea.valueFromPoint(mouseArea.mouseX, mouseArea.mouseY)*30*60;
-
-            function valueFromPoint(x, y) {
-                var yy = circle.height / 2 - y;
-                var xx = x - circle.width / 2;
-
-                var angle = (xx || yy) ? Math.atan2(yy, xx) : 0;
-
-                if(angle < -Math.PI / 2)
-                    angle += 2 * Math.PI;
-
-                var v = (Math.PI * 4 / 3 - angle) / (Math.PI * 10 / 6);
-                return Math.max(0, Math.min(1, v));
-            }
-        }
-
-        Text {
-            anchors.centerIn: parent
-            font.pixelSize: 40
-            text: zeroPad(Math.floor(circle.seconds/60)) + ":" + zeroPad(Math.floor((circle.seconds%60)))
-            function zeroPad(n) {
-                return (n < 10 ? "0" : "") + n
-            }
-        }
-
-        IconButton {
-            id: iconButton
-            iconName: timer.running ? "pause" : "timer-outline"
-            iconColor: "black"
-            visible: circle.seconds !== 0
-
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                bottomMargin: Units.dp(13)
-            }
-
-            onClicked: {
-                if(timer.running)
-                    timer.stop()
-                else
-                {
-                    startDate = new Date
-                    selectedTime = circle.seconds
-                    timer.start()
+            height: parent.height
+            width: parent.width/2-1
+            clip: true
+            spacing: 15
+            model: 60
+            delegate: Item {
+                width: minuteLV.width
+                height: 30
+                Text {
+                    text: index
+                    anchors.centerIn: parent
+                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
+                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
+                    Behavior on scale { NumberAnimation { duration: 200 } }
+                    Behavior on color { ColorAnimation { } }
                 }
+            }
+            preferredHighlightBegin: height / 2 - 15
+            preferredHighlightEnd: height / 2 + 15
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            highlightMoveVelocity: 800
+            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex
+        }
+
+        ListView {
+            id: secondLV
+            currentIndex: 0
+            enabled: !timer.running
+            height: parent.height
+            width: parent.width/2-1
+            clip: true
+            spacing: 15
+            model: 60
+            delegate: Item {
+                width: secondLV.width
+                height: 30
+                Text {
+                    text: zeroPad(index)
+                    anchors.centerIn: parent
+                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
+                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
+                    Behavior on scale { NumberAnimation { duration: 200 } }
+                    Behavior on color { ColorAnimation { } }
+                }
+            }
+            preferredHighlightBegin: height / 2 - 15
+            preferredHighlightEnd: height / 2 + 15
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            highlightMoveVelocity: 800
+            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex
+        }
+    }
+
+    Text {
+        text: ":"
+        color: "white"
+        anchors.centerIn: parent
+        font.pixelSize: parent.height/8
+    }
+
+    IconButton {
+        id: iconButton
+        iconName: timer.running ? "pause" : "timer-outline"
+        iconColor: "white"
+        pressedIconColor: "lightgrey"
+        visible: seconds !== 0
+
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: Units.dp(10)
+        }
+
+        onClicked: {
+            if(timer.running)
+                timer.stop()
+            else
+            {
+                startDate = new Date
+                selectedTime = seconds
+                timer.start()
             }
         }
     }
@@ -109,8 +152,10 @@ Application {
         id: timer
         running: false
         repeat: true
+        interval: 500
+        triggeredOnStart: true
         onTriggered: {
-            if(circle.seconds <= 0)
+            if(seconds <= 0)
             {
                 timer.stop()
                 haptics.play()
@@ -120,7 +165,9 @@ Application {
             else
             {
                 var currentDate = new Date
-                circle.seconds = selectedTime + (startDate.getTime() - currentDate.getTime())/1000
+                seconds = selectedTime - (currentDate.getTime() - startDate.getTime())/1000
+                secondLV.currentIndex = seconds%60
+                minuteLV.currentIndex = seconds/60
             }
         }
     }
