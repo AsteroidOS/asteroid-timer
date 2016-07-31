@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2015 - Florent Revest <revestflo@gmail.com>
+ * Copyright (C) 2016 - Sylvia van Os <iamsylvie@openmailbox.org>
+ *               2015 - Florent Revest <revestflo@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,16 +46,16 @@ Application {
         anchors.right: parent.right
         height: parent.height*0.5
         ListView {
-            id: minuteLV
-            currentIndex: 5
+            id: hourLV
+            currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: parent.width/2-1
+            width: parent.width/5-1
             clip: true
             spacing: 15
-            model: 60
+            model: 10
             delegate: Item {
-                width: minuteLV.width
+                width: hourLV.width
                 height: 30
                 Text {
                     text: index
@@ -69,7 +70,53 @@ Application {
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveVelocity: 800
-            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex
+            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
+        }
+
+        Text {
+            text: ":"
+            color: "white"
+            anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width/5-1
+            font.pixelSize: parent.height/8
+        }
+
+        ListView {
+            id: minuteLV
+            currentIndex: 5
+            enabled: !timer.running
+            height: parent.height
+            width: parent.width/5-1
+            clip: true
+            spacing: 15
+            model: 60
+            delegate: Item {
+                width: minuteLV.width
+                height: 30
+                Text {
+                    text: zeroPad(index)
+                    anchors.centerIn: parent
+                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
+                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
+                    Behavior on scale { NumberAnimation { duration: 200 } }
+                    Behavior on color { ColorAnimation { } }
+                }
+            }
+            preferredHighlightBegin: height / 2 - 15
+            preferredHighlightEnd: height / 2 + 15
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            highlightMoveVelocity: 800
+            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
+        }
+
+        Text {
+            text: ":"
+            color: "white"
+            anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width/5-1
+            font.pixelSize: parent.height/8
         }
 
         ListView {
@@ -77,7 +124,7 @@ Application {
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: parent.width/2-1
+            width: parent.width/5-1
             clip: true
             spacing: 15
             model: 60
@@ -97,15 +144,8 @@ Application {
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveVelocity: 800
-            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex
+            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
-    }
-
-    Text {
-        text: ":"
-        color: "white"
-        anchors.centerIn: parent
-        font.pixelSize: parent.height/8
     }
 
     IconButton {
@@ -167,7 +207,8 @@ Application {
                 var currentDate = new Date
                 seconds = selectedTime - (currentDate.getTime() - startDate.getTime())/1000
                 secondLV.currentIndex = seconds%60
-                minuteLV.currentIndex = seconds/60
+                minuteLV.currentIndex = (seconds%3600)/60
+                hourLV.currentIndex = seconds/3600
             }
         }
     }
