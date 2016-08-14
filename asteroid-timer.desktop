@@ -3,8 +3,9 @@ Type=Application
 Name=Timer
 Name[de_DE]=Timer
 Name[es_ES]=Temporizador
-Name[nl_NL]=Timer
 Name[fr_FR]=Minuteur
+Name[nl_NL]=Timer
+Name[pl_PL]=Timer
 Categories=Applications;
 Exec=invoker --type=qtcomponents-qt5 /usr/bin/asteroid-timer
 Icon=gnome-clocks
