@@ -150,7 +150,7 @@ Application {
 
     IconButton {
         id: iconButton
-        iconName: timer.running ? "pause" : "timer-outline"
+        iconName: timer.running ? "ios-pause" : "ios-timer-outline"
         iconColor: "white"
         pressedIconColor: "lightgrey"
         visible: seconds !== 0
