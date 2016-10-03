@@ -69,7 +69,7 @@ Application {
             preferredHighlightBegin: height / 2 - 15
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
-            highlightMoveVelocity: 800
+            highlightMoveDuration: 400
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
@@ -106,7 +106,7 @@ Application {
             preferredHighlightBegin: height / 2 - 15
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
-            highlightMoveVelocity: 800
+            highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
@@ -143,7 +143,7 @@ Application {
             preferredHighlightBegin: height / 2 - 15
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
-            highlightMoveVelocity: 800
+            highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
     }
