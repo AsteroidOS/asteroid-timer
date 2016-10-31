@@ -32,13 +32,6 @@ Application {
         return (n < 10 ? "0" : "") + n
     }
 
-    Rectangle {
-        anchors.fill: parent
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "#a64d8b" }
-            GradientStop { position: 1.0; color: "#664d95" }
-        }
-    }
 
     Row {
         anchors.verticalCenter: parent.verticalCenter
