@@ -24,6 +24,9 @@ import org.nemomobile.dbus 1.0
 Application {
     id: app
 
+    centerColor: "#ff3333"
+    outerColor: "#660000"
+
     property var startDate: 0
     property int selectedTime: 0
     property int seconds: 5*60
@@ -31,7 +34,6 @@ Application {
     function zeroPad(n) {
         return (n < 10 ? "0" : "") + n
     }
-
 
     Row {
         anchors.verticalCenter: parent.verticalCenter
