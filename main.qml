@@ -24,8 +24,8 @@ import org.nemomobile.dbus 1.0
 Application {
     id: app
 
-    centerColor: "#ff3333"
-    outerColor: "#660000"
+    centerColor: "#E34FB1"
+    outerColor: "#83155B"
 
     property var startDate: 0
     property int selectedTime: 0
