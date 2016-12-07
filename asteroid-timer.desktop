@@ -6,6 +6,7 @@ Name[es_ES]=Temporizador
 Name[fr_FR]=Minuteur
 Name[nl_NL]=Timer
 Name[pl_PL]=Timer
+Name[sv_SV]=Timer
 Name[ru_RU]=таймер
 Categories=Applications;
 Exec=invoker --single-instance --type=qtcomponents-qt5 /usr/bin/asteroid-timer
