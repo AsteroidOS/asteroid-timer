@@ -3,14 +3,15 @@ Type=Application
 Name=Timer
 Name[de_DE]=Timer
 Name[es]=Temporizador
+Name[fa]=زمان سنج
 Name[fr]=Minuteur
 Name[ko]=타이머
 Name[nl_NL]=Timer
 Name[pl]=Timer
 Name[pt_BR]=Timer
-Name[sv]=Timer
 Name[ru]=таймер
-Name[fa]=زمان سنج
+Name[sv]=Timer
+Name[uk]=Таймер
 Categories=Applications;
 Exec=invoker --single-instance --type=qtcomponents-qt5 /usr/bin/asteroid-timer
 Icon=ios-timer-outline
