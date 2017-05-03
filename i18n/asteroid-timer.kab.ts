@@ -6,7 +6,7 @@
     <message>
         <location filename="asteroid-timer.desktop.h" line="5"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Amesmiḍan n wakud</translation>
     </message>
 </context>
 </TS>
