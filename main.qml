@@ -17,8 +17,8 @@
  */
 
 import QtQuick 2.4
-import QtFeedback 5.0
 import org.asteroid.controls 1.0
+import org.nemomobile.ngf 1.0
 import org.nemomobile.dbus 1.0
 
 Application {
@@ -168,10 +168,10 @@ Application {
         }
     }
 
-    ThemeEffect {
-         id: haptics
-         effect: "PressStrong"
-     }
+    NonGraphicalFeedback {
+        id: feedback
+        event: "email"
+    }
 
     property DBusInterface _dbus: DBusInterface {
         id: dbus
@@ -193,7 +193,7 @@ Application {
             if(seconds <= 0)
             {
                 timer.stop()
-                haptics.play()
+                feedback.play()
                 dbus.call("req_display_state_on", undefined)
                 window.raise()
             }
