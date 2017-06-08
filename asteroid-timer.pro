@@ -1,9 +1,10 @@
 TEMPLATE = app
-QT += qml quick
+QT += qml quick dbus
 CONFIG += link_pkgconfig
 PKGCONFIG += qdeclarative5-boostable
 
-SOURCES +=     main.cpp
+SOURCES +=     main.cpp systemdtimer.cpp
+HEADERS +=     systemdtimer.h
 RESOURCES +=   resources.qrc
 OTHER_FILES += main.qml
 

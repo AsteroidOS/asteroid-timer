@@ -18,12 +18,18 @@
 #include <QQuickView>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QtQml>
 #include <MDeclarativeCache>
+
+#include "systemdtimer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
+    bool elapsed = (argc > 1 && strcmp(argv[1], "--elapsed") == 0);
+
     QScopedPointer<QGuiApplication> app(MDeclarativeCache::qApplication(argc, argv));
     QScopedPointer<QQuickView> view(MDeclarativeCache::qQuickView());
+    view->rootContext()->setContextProperty("timer", new SystemdTimer(elapsed));
     view->setSource(QUrl("qrc:/main.qml"));
     view->setTitle("Timer");
     view->resize(app->primaryScreen()->size());

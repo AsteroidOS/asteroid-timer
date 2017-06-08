@@ -27,9 +27,23 @@ Application {
     centerColor: "#E34FB1"
     outerColor: "#83155B"
 
-    property var startDate: 0
-    property int selectedTime: 0
-    property int seconds: 5*60
+    Connections {
+        target:  timer
+        onRemainingSecChanged: {
+            var sec = timer.remainingSec;
+            hourLV.currentIndex = (sec/(60*60))%10;
+            minuteLV.currentIndex = (sec/60)%60;
+            secondLV.currentIndex = sec%60;
+        }
+        onElapsed: {
+            hourLV.currentIndex   = 0;
+            minuteLV.currentIndex = 0;
+            secondLV.currentIndex = 0;
+            feedback.play()
+            dbus.call("req_display_state_on", undefined)
+            window.raise()
+        }
+    }
 
     function zeroPad(n) {
         return (n < 10 ? "0" : "") + n
@@ -65,7 +79,6 @@ Application {
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: 400
-            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
         Text {
@@ -102,7 +115,6 @@ Application {
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
-            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
         Text {
@@ -139,7 +151,6 @@ Application {
             preferredHighlightEnd: height / 2 + 15
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
-            onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
     }
 
@@ -148,7 +159,7 @@ Application {
         iconName: timer.running ? "ios-pause" : "ios-timer-outline"
         iconColor: "white"
         pressedIconColor: "lightgrey"
-        visible: seconds !== 0
+        visible: secondLV.currentIndex !== 0 || minuteLV.currentIndex !== 0 || hourLV.currentIndex !== 0
 
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -160,11 +171,7 @@ Application {
             if(timer.running)
                 timer.stop()
             else
-            {
-                startDate = new Date
-                selectedTime = seconds
-                timer.start()
-            }
+                timer.start(secondLV.currentIndex, minuteLV.currentIndex, hourLV.currentIndex)
         }
     }
 
@@ -181,30 +188,5 @@ Application {
         iface: "com.nokia.mce.request"
 
         busType: DBusInterface.SystemBus
-    }
-
-    Timer {
-        id: timer
-        running: false
-        repeat: true
-        interval: 500
-        triggeredOnStart: true
-        onTriggered: {
-            if(seconds <= 0)
-            {
-                timer.stop()
-                feedback.play()
-                dbus.call("req_display_state_on", undefined)
-                window.raise()
-            }
-            else
-            {
-                var currentDate = new Date
-                seconds = selectedTime - (currentDate.getTime() - startDate.getTime())/1000
-                secondLV.currentIndex = seconds%60
-                minuteLV.currentIndex = (seconds%3600)/60
-                hourLV.currentIndex = seconds/3600
-            }
-        }
     }
 }
