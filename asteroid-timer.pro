@@ -1,8 +1,7 @@
 TARGET = asteroid-timer
 CONFIG += asteroidapp
 
-SOURCES +=     main.cpp systemdtimer.cpp
-HEADERS +=     systemdtimer.h
+SOURCES +=     main.cpp
 RESOURCES +=   resources.qrc
 OTHER_FILES += main.qml
 
