@@ -20,6 +20,7 @@ import QtQuick 2.4
 import org.asteroid.controls 1.0
 import org.nemomobile.ngf 1.0
 import org.nemomobile.dbus 1.0
+import org.nemomobile.keepalive 1.1
 
 Application {
     id: app
@@ -206,5 +207,6 @@ Application {
                 hourLV.currentIndex = seconds/3600
             }
         }
+        onRunningChanged: DisplayBlanking.preventBlanking = running
     }
 }
