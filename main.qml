@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.4
+import QtQuick 2.9
 import org.asteroid.controls 1.0
 import org.nemomobile.ngf 1.0
 import org.nemomobile.dbus 1.0
@@ -40,19 +40,19 @@ Application {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.height*0.5
+        height: Dims.h(50)
         ListView {
             id: hourLV
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: parent.width/5-1
+            width: Dims.w(20)
             clip: true
-            spacing: 15
+            spacing: Dims.l(2)
             model: 10
             delegate: Item {
                 width: hourLV.width
-                height: 30
+                height: Dims.h(10)
                 Text {
                     text: index
                     anchors.centerIn: parent
@@ -62,8 +62,8 @@ Application {
                     Behavior on color { ColorAnimation { } }
                 }
             }
-            preferredHighlightBegin: height / 2 - 15
-            preferredHighlightEnd: height / 2 + 15
+            preferredHighlightBegin: height / 2 - Dims.h(5)
+            preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: 400
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
@@ -74,8 +74,8 @@ Application {
             color: "white"
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
-            width: parent.width/5-1
-            font.pixelSize: parent.height/8
+            width: Dims.w(20)
+            font.pixelSize: Dims.l(12)
         }
 
         ListView {
@@ -83,13 +83,13 @@ Application {
             currentIndex: 5
             enabled: !timer.running
             height: parent.height
-            width: parent.width/5-1
+            width: Dims.w(20)
             clip: true
-            spacing: 15
+            spacing: Dims.l(2)
             model: 60
             delegate: Item {
                 width: minuteLV.width
-                height: 30
+                height: Dims.h(10)
                 Text {
                     text: zeroPad(index)
                     anchors.centerIn: parent
@@ -99,8 +99,8 @@ Application {
                     Behavior on color { ColorAnimation { } }
                 }
             }
-            preferredHighlightBegin: height / 2 - 15
-            preferredHighlightEnd: height / 2 + 15
+            preferredHighlightBegin: height / 2 - Dims.h(5)
+            preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
@@ -111,8 +111,8 @@ Application {
             color: "white"
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
-            width: parent.width/5-1
-            font.pixelSize: parent.height/8
+            width: Dims.w(20)
+            font.pixelSize: Dims.l(12)
         }
 
         ListView {
@@ -120,13 +120,13 @@ Application {
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: parent.width/5-1
+            width: Dims.w(20)
             clip: true
-            spacing: 15
+            spacing: Dims.l(2)
             model: 60
             delegate: Item {
                 width: secondLV.width
-                height: 30
+                height: Dims.h(10)
                 Text {
                     text: zeroPad(index)
                     anchors.centerIn: parent
@@ -136,8 +136,8 @@ Application {
                     Behavior on color { ColorAnimation { } }
                 }
             }
-            preferredHighlightBegin: height / 2 - 15
-            preferredHighlightEnd: height / 2 + 15
+            preferredHighlightBegin: height / 2 - Dims.h(5)
+            preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
@@ -154,7 +154,7 @@ Application {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: Units.dp(10)
+            bottomMargin: Dims.iconButtonMargin
         }
 
         onClicked: {
