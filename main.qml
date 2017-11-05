@@ -56,7 +56,7 @@ Application {
                 Text {
                     text: index
                     anchors.centerIn: parent
-                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
+                    color: parent.PathView.isCurrentItem ? "#FFFFFF" : "#88FFFFFF"
                     scale: parent.ListView.isCurrentItem ? 1.5 : 1
                     Behavior on scale { NumberAnimation { duration: 200 } }
                     Behavior on color { ColorAnimation { } }
@@ -93,7 +93,7 @@ Application {
                 Text {
                     text: zeroPad(index)
                     anchors.centerIn: parent
-                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
+                    color: parent.PathView.isCurrentItem ? "#FFFFFF" : "#88FFFFFF"
                     scale: parent.ListView.isCurrentItem ? 1.5 : 1
                     Behavior on scale { NumberAnimation { duration: 200 } }
                     Behavior on color { ColorAnimation { } }
@@ -130,7 +130,7 @@ Application {
                 Text {
                     text: zeroPad(index)
                     anchors.centerIn: parent
-                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
+                    color: parent.PathView.isCurrentItem ? "#FFFFFF" : "#88FFFFFF"
                     scale: parent.ListView.isCurrentItem ? 1.5 : 1
                     Behavior on scale { NumberAnimation { duration: 200 } }
                     Behavior on color { ColorAnimation { } }
@@ -147,8 +147,6 @@ Application {
     IconButton {
         id: iconButton
         iconName: timer.running ? "ios-pause" : "ios-timer-outline"
-        iconColor: "white"
-        pressedIconColor: "lightgrey"
         visible: seconds !== 0
 
         anchors {
