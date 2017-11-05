@@ -149,12 +149,6 @@ Application {
         iconName: timer.running ? "ios-pause" : "ios-timer-outline"
         visible: seconds !== 0
 
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: Dims.iconButtonMargin
-        }
-
         onClicked: {
             if(timer.running)
                 timer.stop()
