@@ -69,9 +69,8 @@ Application {
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
-        Text {
+        Label {
             text: ":"
-            color: "white"
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
             width: Dims.w(20)
@@ -106,9 +105,8 @@ Application {
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
-        Text {
+        Label {
             text: ":"
-            color: "white"
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
             width: Dims.w(20)
