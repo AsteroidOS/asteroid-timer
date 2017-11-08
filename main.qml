@@ -50,18 +50,7 @@ Application {
             clip: true
             spacing: Dims.l(2)
             model: 10
-            delegate: Item {
-                width: hourLV.width
-                height: Dims.h(10)
-                Text {
-                    text: index
-                    anchors.centerIn: parent
-                    color: parent.PathView.isCurrentItem ? "#FFFFFF" : "#88FFFFFF"
-                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
-                    Behavior on scale { NumberAnimation { duration: 200 } }
-                    Behavior on color { ColorAnimation { } }
-                }
-            }
+            delegate: SpinnerDelegate { text: index }
             preferredHighlightBegin: height / 2 - Dims.h(5)
             preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
@@ -86,18 +75,7 @@ Application {
             clip: true
             spacing: Dims.l(2)
             model: 60
-            delegate: Item {
-                width: minuteLV.width
-                height: Dims.h(10)
-                Text {
-                    text: zeroPad(index)
-                    anchors.centerIn: parent
-                    color: parent.PathView.isCurrentItem ? "#FFFFFF" : "#88FFFFFF"
-                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
-                    Behavior on scale { NumberAnimation { duration: 200 } }
-                    Behavior on color { ColorAnimation { } }
-                }
-            }
+            delegate: SpinnerDelegate { text: zeroPad(index) }
             preferredHighlightBegin: height / 2 - Dims.h(5)
             preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
@@ -122,18 +100,7 @@ Application {
             clip: true
             spacing: Dims.l(2)
             model: 60
-            delegate: Item {
-                width: secondLV.width
-                height: Dims.h(10)
-                Text {
-                    text: zeroPad(index)
-                    anchors.centerIn: parent
-                    color: parent.PathView.isCurrentItem ? "#FFFFFF" : "#88FFFFFF"
-                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
-                    Behavior on scale { NumberAnimation { duration: 200 } }
-                    Behavior on color { ColorAnimation { } }
-                }
-            }
+            delegate: SpinnerDelegate { text: zeroPad(index) }
             preferredHighlightBegin: height / 2 - Dims.h(5)
             preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
