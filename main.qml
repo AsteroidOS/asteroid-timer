@@ -128,7 +128,7 @@ Application {
 
     NonGraphicalFeedback {
         id: feedback
-        event: "email"
+        event: "clock"
     }
 
     property DBusInterface _dbus: DBusInterface {
