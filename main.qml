@@ -41,20 +41,14 @@ Application {
         anchors.left: parent.left
         anchors.right: parent.right
         height: Dims.h(50)
-        ListView {
+        Spinner {
             id: hourLV
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
             width: Dims.w(20)
-            clip: true
-            spacing: Dims.l(2)
             model: 10
             delegate: SpinnerDelegate { text: index }
-            preferredHighlightBegin: height / 2 - Dims.h(5)
-            preferredHighlightEnd: height / 2 + Dims.h(5)
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            highlightMoveDuration: 400
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
@@ -66,19 +60,13 @@ Application {
             font.pixelSize: Dims.l(12)
         }
 
-        ListView {
+        Spinner {
             id: minuteLV
             currentIndex: 5
             enabled: !timer.running
             height: parent.height
             width: Dims.w(20)
-            clip: true
-            spacing: Dims.l(2)
             model: 60
-            delegate: SpinnerDelegate { text: zeroPad(index) }
-            preferredHighlightBegin: height / 2 - Dims.h(5)
-            preferredHighlightEnd: height / 2 + Dims.h(5)
-            highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
@@ -91,19 +79,13 @@ Application {
             font.pixelSize: Dims.l(12)
         }
 
-        ListView {
+        Spinner {
             id: secondLV
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
             width: Dims.w(20)
-            clip: true
-            spacing: Dims.l(2)
             model: 60
-            delegate: SpinnerDelegate { text: zeroPad(index) }
-            preferredHighlightBegin: height / 2 - Dims.h(5)
-            preferredHighlightEnd: height / 2 + Dims.h(5)
-            highlightRangeMode: ListView.StrictlyEnforceRange
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
