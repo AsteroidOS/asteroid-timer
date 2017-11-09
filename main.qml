@@ -50,18 +50,7 @@ Application {
             clip: true
             spacing: Dims.l(2)
             model: 10
-            delegate: Item {
-                width: hourLV.width
-                height: Dims.h(10)
-                Text {
-                    text: index
-                    anchors.centerIn: parent
-                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
-                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
-                    Behavior on scale { NumberAnimation { duration: 200 } }
-                    Behavior on color { ColorAnimation { } }
-                }
-            }
+            delegate: SpinnerDelegate { text: index }
             preferredHighlightBegin: height / 2 - Dims.h(5)
             preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
@@ -69,9 +58,8 @@ Application {
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
-        Text {
+        Label {
             text: ":"
-            color: "white"
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
             width: Dims.w(20)
@@ -87,18 +75,7 @@ Application {
             clip: true
             spacing: Dims.l(2)
             model: 60
-            delegate: Item {
-                width: minuteLV.width
-                height: Dims.h(10)
-                Text {
-                    text: zeroPad(index)
-                    anchors.centerIn: parent
-                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
-                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
-                    Behavior on scale { NumberAnimation { duration: 200 } }
-                    Behavior on color { ColorAnimation { } }
-                }
-            }
+            delegate: SpinnerDelegate { text: zeroPad(index) }
             preferredHighlightBegin: height / 2 - Dims.h(5)
             preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
@@ -106,9 +83,8 @@ Application {
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
-        Text {
+        Label {
             text: ":"
-            color: "white"
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
             width: Dims.w(20)
@@ -124,18 +100,7 @@ Application {
             clip: true
             spacing: Dims.l(2)
             model: 60
-            delegate: Item {
-                width: secondLV.width
-                height: Dims.h(10)
-                Text {
-                    text: zeroPad(index)
-                    anchors.centerIn: parent
-                    color: parent.ListView.isCurrentItem ? "white" : "lightgrey"
-                    scale: parent.ListView.isCurrentItem ? 1.5 : 1
-                    Behavior on scale { NumberAnimation { duration: 200 } }
-                    Behavior on color { ColorAnimation { } }
-                }
-            }
+            delegate: SpinnerDelegate { text: zeroPad(index) }
             preferredHighlightBegin: height / 2 - Dims.h(5)
             preferredHighlightEnd: height / 2 + Dims.h(5)
             highlightRangeMode: ListView.StrictlyEnforceRange
@@ -147,15 +112,7 @@ Application {
     IconButton {
         id: iconButton
         iconName: timer.running ? "ios-pause" : "ios-timer-outline"
-        iconColor: "white"
-        pressedIconColor: "lightgrey"
         visible: seconds !== 0
-
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: Dims.iconButtonMargin
-        }
 
         onClicked: {
             if(timer.running)
