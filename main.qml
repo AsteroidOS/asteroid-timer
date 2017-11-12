@@ -40,7 +40,7 @@ Application {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.right: parent.right
-        height: Dims.h(50)
+        height: Dims.h(70)
         Spinner {
             id: hourLV
             currentIndex: 0
