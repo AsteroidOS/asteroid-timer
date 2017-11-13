@@ -6,7 +6,7 @@
     <message>
         <location filename="asteroid-timer.desktop.h" line="5"/>
         <source>Timer</source>
-        <translation>Timer</translation>
+        <translation>Minutnik</translation>
     </message>
 </context>
 </TS>
