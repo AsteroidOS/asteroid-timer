@@ -2,9 +2,9 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="tl">
 <context>
-    <name>QObject</name>
-    <message>
-        <location filename="asteroid-timer.desktop.h" line="5"/>
+    <name></name>
+    <message id="id-app-launcher-name">
+        <location filename="asteroid-timer.desktop.h" line="6"/>
         <source>Timer</source>
         <translation type="unfinished"></translation>
     </message>

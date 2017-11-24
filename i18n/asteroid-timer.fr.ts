@@ -2,11 +2,18 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr">
 <context>
+    <name></name>
+    <message id="id-app-launcher-name">
+        <location filename="asteroid-timer.desktop.h" line="6"/>
+        <source>Timer</source>
+        <translation type="unfinished">Minuteur</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="asteroid-timer.desktop.h" line="5"/>
         <source>Timer</source>
-        <translation>Minuteur</translation>
+        <translation type="vanished">Minuteur</translation>
     </message>
 </context>
 </TS>
