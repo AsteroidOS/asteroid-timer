@@ -6,14 +6,7 @@
     <message id="id-app-launcher-name">
         <location filename="asteroid-timer.desktop.h" line="6"/>
         <source>Timer</source>
-        <translation type="unfinished">ﺰﻣﺎﻧ ﺲﻨﺟ</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Timer</source>
-        <translation type="vanished">ﺰﻣﺎﻧ ﺲﻨﺟ</translation>
+        <translation>ﺰﻣﺎﻧ ﺲﻨﺟ</translation>
     </message>
 </context>
 </TS>
