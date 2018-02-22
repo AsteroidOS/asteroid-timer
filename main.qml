@@ -110,7 +110,7 @@ Application {
 
     NonGraphicalFeedback {
         id: feedback
-        event: "clock"
+        event: "alarm"
     }
 
     property DBusInterface _dbus: DBusInterface {
