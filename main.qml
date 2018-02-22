@@ -18,9 +18,9 @@
 
 import QtQuick 2.9
 import org.asteroid.controls 1.0
-import org.nemomobile.ngf 1.0
-import org.nemomobile.dbus 1.0
-import org.nemomobile.keepalive 1.1
+import Nemo.Ngf 1.0
+import Nemo.DBus 2.0
+import Nemo.KeepAlive 1.1
 
 Application {
     id: app
@@ -116,11 +116,11 @@ Application {
     property DBusInterface _dbus: DBusInterface {
         id: dbus
 
-        destination: "com.nokia.mce"
+        service: "com.nokia.mce"
         path: "/com/nokia/mce/request"
         iface: "com.nokia.mce.request"
 
-        busType: DBusInterface.SystemBus
+        bus: DBus.SystemBus
     }
 
     Timer {
