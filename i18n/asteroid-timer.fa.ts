@@ -6,7 +6,7 @@
     <message id="id-app-launcher-name">
         <location filename="asteroid-timer.desktop.h" line="6"/>
         <source>Timer</source>
-        <translation>زمان سنج</translation>
+        <translation>شمارش معکوس</translation>
     </message>
 </context>
 </TS>
