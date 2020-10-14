@@ -6,7 +6,7 @@
     <message id="id-app-launcher-name">
         <location filename="asteroid-timer.desktop.h" line="6"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Amesiḍen n wakud</translation>
     </message>
 </context>
 </TS>
