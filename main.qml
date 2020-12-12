@@ -18,9 +18,7 @@
 
 import QtQuick 2.9
 import org.asteroid.controls 1.0
-import Nemo.Ngf 1.0
-import Nemo.DBus 2.0
-import Nemo.KeepAlive 1.1
+import Nemo.Alarms 1.0
 
 Application {
     id: app
@@ -28,12 +26,33 @@ Application {
     centerColor: "#E34FB1"
     outerColor: "#83155B"
 
+    property var alarmObject: null
     property var startDate: 0
     property int selectedTime: 0
     property int seconds: 5*60
 
     function zeroPad(n) {
         return (n < 10 ? "0" : "") + n
+    }
+
+    AlarmsModel {
+        id: alarmModel
+        onlyCountdown: true
+        onPopulatedChanged: {
+            for (var i=0; rowCount() > i; i++) {
+                // Get Alarm object using AlarmObjectRole(=0x0100)
+                var alarm = alarmModel.data(alarmModel.index(i, 0), 0x0100)
+                if (!alarm.enabled) {
+                    alarm.deleteAlarm()
+                } else {
+                    alarmObject = alarm
+                    startDate = new Date
+                    seconds = alarm.triggerTime - (startDate.getTime()/1000)
+                    selectedTime = seconds
+                    timer.start()
+                }
+            }
+        }
     }
 
     Row {
@@ -97,30 +116,22 @@ Application {
         visible: seconds !== 0
 
         onClicked: {
-            if(timer.running)
+            if (alarmObject !== null) {
+                alarmObject.deleteAlarm()
                 timer.stop()
-            else
-            {
+            } else {
+                alarmObject = alarmModel.createAlarm()
+                alarmObject.countdown = true
+                alarmObject.second = seconds-1
+                alarmObject.title = "";
+                alarmObject.enabled = true
+                alarmObject.save()
+
                 startDate = new Date
                 selectedTime = seconds
                 timer.start()
             }
         }
-    }
-
-    NonGraphicalFeedback {
-        id: feedback
-        event: "alarm"
-    }
-
-    property DBusInterface _dbus: DBusInterface {
-        id: dbus
-
-        service: "com.nokia.mce"
-        path: "/com/nokia/mce/request"
-        iface: "com.nokia.mce.request"
-
-        bus: DBus.SystemBus
     }
 
     Timer {
@@ -130,15 +141,9 @@ Application {
         interval: 500
         triggeredOnStart: true
         onTriggered: {
-            if(seconds <= 0)
-            {
+            if(seconds <= 0) {
                 timer.stop()
-                feedback.play()
-                dbus.call("req_display_state_on", undefined)
-                window.raise()
-            }
-            else
-            {
+            } else {
                 var currentDate = new Date
                 seconds = selectedTime - (currentDate.getTime() - startDate.getTime())/1000
                 secondLV.currentIndex = seconds%60
@@ -146,6 +151,5 @@ Application {
                 hourLV.currentIndex = seconds/3600
             }
         }
-        onRunningChanged: DisplayBlanking.preventBlanking = running
     }
 }
