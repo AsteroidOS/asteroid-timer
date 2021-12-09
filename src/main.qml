@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2016 - Sylvia van Os <iamsylvie@openmailbox.org>
+ * Copyright (C) 2021 Timo Könnecke <github.com/eLtMosen>
+ *               2016 - Sylvia van Os <iamsylvie@openmailbox.org>
  *               2015 - Florent Revest <revestflo@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -57,26 +58,33 @@ Application {
 
     Row {
         anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -parent.height * 0.002
         anchors.left: parent.left
+        anchors.leftMargin: parent.width * 0.159
+
         anchors.right: parent.right
+        anchors.rightMargin: parent.width * 0.016
+
         height: Dims.h(70)
+
         Spinner {
             id: hourLV
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: Dims.w(20)
-            model: 10
-            delegate: SpinnerDelegate { text: index }
+            width: parent.width * 0.165
+            model: 24
+            delegate: SpinnerDelegate { text: zeroPad(index) }
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
 
         Label {
             text: ":"
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -parent.height * 0.013
             horizontalAlignment: Text.AlignHCenter
-            width: Dims.w(20)
-            font.pixelSize: Dims.l(12)
+            width: parent.width * 0.165
+            font.pixelSize: Dims.l(9)
         }
 
         Spinner {
@@ -84,7 +92,7 @@ Application {
             currentIndex: 5
             enabled: !timer.running
             height: parent.height
-            width: Dims.w(20)
+            width: parent.width * 0.165
             model: 60
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
@@ -93,9 +101,10 @@ Application {
         Label {
             text: ":"
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -parent.height * 0.013
             horizontalAlignment: Text.AlignHCenter
-            width: Dims.w(20)
-            font.pixelSize: Dims.l(12)
+            width: parent.width * 0.165
+            font.pixelSize: Dims.l(9)
         }
 
         Spinner {
@@ -103,7 +112,7 @@ Application {
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: Dims.w(20)
+            width: parent.width * 0.165
             model: 60
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
