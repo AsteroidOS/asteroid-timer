@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2021 Timo Könnecke <github.com/eLtMosen>
- *               2016 - Sylvia van Os <iamsylvie@openmailbox.org>
- *               2015 - Florent Revest <revestflo@gmail.com>
+ *               2016 Sylvia van Os <iamsylvie@openmailbox.org>
+ *               2015 Florent Revest <revestflo@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,14 +57,15 @@ Application {
     }
 
     Row {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -parent.height * 0.002
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width * 0.159
-
-        anchors.right: parent.right
-        anchors.rightMargin: parent.width * 0.016
-
+        id: mainRow
+        anchors {
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -parent.height * 0.002
+            left: parent.left
+            leftMargin: parent.width * 0.159
+            right: parent.right
+            rightMargin: parent.width * 0.016
+        }
         height: Dims.h(70)
 
         Spinner {
@@ -72,19 +73,10 @@ Application {
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: parent.width * 0.165
+            width: parent.width * 0.16
             model: 24
             delegate: SpinnerDelegate { text: zeroPad(index) }
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
-        }
-
-        Label {
-            text: ":"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -parent.height * 0.013
-            horizontalAlignment: Text.AlignHCenter
-            width: parent.width * 0.165
-            font.pixelSize: Dims.l(9)
         }
 
         Spinner {
@@ -92,19 +84,10 @@ Application {
             currentIndex: 5
             enabled: !timer.running
             height: parent.height
-            width: parent.width * 0.165
+            width: parent.width * 0.505
             model: 60
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
-        }
-
-        Label {
-            text: ":"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -parent.height * 0.013
-            horizontalAlignment: Text.AlignHCenter
-            width: parent.width * 0.165
-            font.pixelSize: Dims.l(9)
         }
 
         Spinner {
@@ -112,11 +95,50 @@ Application {
             currentIndex: 0
             enabled: !timer.running
             height: parent.height
-            width: parent.width * 0.165
+            width: parent.width * 0.16
             model: 60
             highlightMoveDuration: currentIndex != 0 ? 400 : 0
             onCurrentIndexChanged: if(enabled) seconds = secondLV.currentIndex + 60*minuteLV.currentIndex + 3600*hourLV.currentIndex
         }
+    }
+
+    Label {
+        text: "h"
+        anchors {
+            centerIn: app
+            verticalCenterOffset: -app.height * 0.056
+            horizontalCenterOffset: -app.width * 0.199
+        }
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: Dims.l(6.4)
+        font.styleName: "Medium"
+        opacity:0.9
+    }
+
+    Label {
+        text: "m"
+        anchors {
+            centerIn: app
+            verticalCenterOffset: -app.height * 0.056
+            horizontalCenterOffset: app.width * 0.084
+        }
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: Dims.l(6.4)
+        font.styleName: "Medium"
+        opacity:0.9
+    }
+
+    Label {
+        text: "s"
+        anchors {
+            centerIn: app
+            verticalCenterOffset: -app.height * 0.056
+            horizontalCenterOffset: app.width * 0.343
+        }
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: Dims.l(6.4)
+        font.styleName: "Medium"
+        opacity:0.9
     }
 
     IconButton {
