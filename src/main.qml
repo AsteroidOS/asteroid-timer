@@ -62,9 +62,9 @@ Application {
             verticalCenter: parent.verticalCenter
             verticalCenterOffset: -parent.height * 0.002
             left: parent.left
-            leftMargin: parent.width * 0.159
+            leftMargin: Dims.w(15.9)
             right: parent.right
-            rightMargin: parent.width * 0.016
+            rightMargin: Dims.w(1.6)
         }
         height: Dims.h(70)
 
