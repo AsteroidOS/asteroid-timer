@@ -24,8 +24,8 @@ import Nemo.Alarms 1.0
 Application {
     id: app
 
-    centerColor: "#E34FB1"
-    outerColor: "#83155B"
+    centerColor: "#A6005F"
+    outerColor: "#0C0003"
 
     property var alarmObject: null
     property var startDate: 0
