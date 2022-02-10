@@ -3,5 +3,5 @@ Type=Application
 Categories=Applications;
 Exec=invoker --single-instance --type=qtcomponents-qt5 /usr/bin/asteroid-timer
 Icon=ios-timer-outline
-X-Asteroid-Center-Color=#E34FB1
-X-Asteroid-Outer-Color=#83155B
+X-Asteroid-Center-Color=#A6005F
+X-Asteroid-Outer-Color=#0C0003
