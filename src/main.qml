@@ -19,6 +19,7 @@
 
 import QtQuick 2.9
 import org.asteroid.controls 1.0
+import Nemo.Configuration 1.0
 import Nemo.Alarms 1.0
 
 Application {
@@ -34,6 +35,12 @@ Application {
 
     function zeroPad(n) {
         return (n < 10 ? "0" : "") + n
+    }
+
+    ConfigurationValue {
+        id: lastTimerDuration
+        key: "/org/asteroidos/timer/last-timer-duration"
+        defaultValue: 5*60
     }
 
     AlarmsModel {
@@ -70,7 +77,7 @@ Application {
 
         Spinner {
             id: hourLV
-            currentIndex: 0
+            currentIndex: lastTimerDuration.value / 3600
             enabled: !timer.running
             height: parent.height
             width: parent.width * 0.16
@@ -81,7 +88,7 @@ Application {
 
         Spinner {
             id: minuteLV
-            currentIndex: 5
+            currentIndex: (lastTimerDuration.value % 3600) / 60
             enabled: !timer.running
             height: parent.height
             width: parent.width * 0.505
@@ -92,7 +99,7 @@ Application {
 
         Spinner {
             id: secondLV
-            currentIndex: 0
+            currentIndex: lastTimerDuration.value % 60
             enabled: !timer.running
             height: parent.height
             width: parent.width * 0.16
@@ -159,7 +166,7 @@ Application {
                 alarmObject.save()
 
                 startDate = new Date
-                selectedTime = seconds
+                lastTimerDuration.value = selectedTime = seconds
                 timer.start()
             }
         }
