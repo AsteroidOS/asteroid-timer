@@ -152,6 +152,11 @@ Application {
         id: iconButton
         iconName: timer.running ? "ios-pause" : "ios-timer-outline"
         visible: seconds !== 0
+        anchors { 
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            bottomMargin: Dims.iconButtonMargin
+        }
 
         onClicked: {
             if (alarmObject !== null) {
