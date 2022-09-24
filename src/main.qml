@@ -21,6 +21,7 @@ import QtQuick 2.9
 import org.asteroid.controls 1.0
 import Nemo.Configuration 1.0
 import Nemo.Alarms 1.0
+import QtMultimedia 5.4
 
 Application {
     id: app
@@ -177,6 +178,13 @@ Application {
         }
     }
 
+    Audio {
+        id: notificationSound
+        source: "file:///usr/share/sounds/notification.wav"
+    }
+
+
+
     Timer {
         id: timer
         running: false
@@ -185,6 +193,7 @@ Application {
         triggeredOnStart: true
         onTriggered: {
             if(seconds <= 0) {
+                notificationSound.play()
                 timer.stop()
             } else {
                 var currentDate = new Date
