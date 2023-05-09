@@ -19,6 +19,13 @@ ecm_find_qmlmodule(Nemo.Alarms 1.0)
 
 add_subdirectory(src)
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/asteroid-timer.in
+	${CMAKE_BINARY_DIR}/asteroid-timer
+	@ONLY)
+
+install(PROGRAMS ${CMAKE_BINARY_DIR}/asteroid-timer
+	DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 build_translations(i18n)
 generate_desktop(${CMAKE_SOURCE_DIR} asteroid-timer)
 
