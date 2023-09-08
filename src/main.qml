@@ -166,7 +166,7 @@ Application {
                 alarmObject = alarmModel.createAlarm()
                 alarmObject.countdown = true
                 alarmObject.second = seconds-1
-                alarmObject.title = "";
+                alarmObject.title = new Date(seconds).toISOString().slice(11, 19);
                 alarmObject.enabled = true
                 alarmObject.save()
 
