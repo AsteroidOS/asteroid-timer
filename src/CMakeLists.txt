@@ -4,7 +4,7 @@ set_target_properties(asteroid-timer PROPERTIES PREFIX "")
 target_link_libraries(
 	asteroid-timer
 	PUBLIC
-		Asteroid::AsteroidApp
+		Asteroid::AsteroidApp6
 )
 
 install(
