@@ -21,6 +21,7 @@ import QtQuick 2.9
 import org.asteroid.controls 1.0
 import Nemo.Configuration 1.0
 import Nemo.Alarms 1.0
+import Nemo.Ngf 1.0
 
 Application {
     id: app
@@ -32,6 +33,10 @@ Application {
     property var startDate: 0
     property int selectedTime: 0
     property int seconds: 5*60
+    property bool alarmActive: false
+    property var alarmDialog: null
+
+    overridesSystemGestures: alarmActive
 
     function zeroPad(n) {
         return (n < 10 ? "0" : "") + n
@@ -43,10 +48,29 @@ Application {
         defaultValue: 5*60
     }
 
+    AlarmHandler {
+        id: alarmHandler
+        onActiveDialogsChanged: {
+            if (!alarmActive && activeDialogs.length > 0 && activeDialogs[0].type === Alarm.Countdown) {
+                alarmDialog = activeDialogs[0]
+                alarmActive = true
+                dialogOnScreen = true
+                feedback.play()
+            }
+        }
+    }
+
+    NonGraphicalFeedback {
+        id: feedback
+        event: "alarm"
+    }
+
     AlarmsModel {
         id: alarmModel
         onlyCountdown: true
         onPopulatedChanged: {
+            if (alarmActive) return
+            var foundAlarm = false
             for (var i=0; rowCount() > i; i++) {
                 // Get Alarm object using AlarmObjectRole(=0x0100)
                 var alarm = alarmModel.data(alarmModel.index(i, 0), 0x0100)
@@ -58,7 +82,12 @@ Application {
                     seconds = alarm.triggerTime - (startDate.getTime()/1000)
                     selectedTime = seconds
                     timer.start()
+                    foundAlarm = true
                 }
+            }
+            if (!foundAlarm) {
+                alarmObject = null
+                seconds = lastTimerDuration.value
             }
         }
     }
@@ -192,6 +221,77 @@ Application {
                 secondLV.currentIndex = seconds%60
                 minuteLV.currentIndex = (seconds%3600)/60
                 hourLV.currentIndex = seconds/3600
+            }
+        }
+    }
+
+    Item {
+        id: alarmOverlay
+        visible: alarmActive
+        anchors.fill: parent
+        z: 100
+
+        Rectangle {
+            anchors.fill: parent
+            color: "#333333"
+        }
+
+        StatusPage {
+            icon: "ios-timer-outline"
+        }
+
+        Label {
+            id: alarmTitle
+            height: Dims.h(44)
+            width: Dims.l(62)
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+            }
+            renderType: Text.NativeRendering
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.WordWrap
+            font.pixelSize: Dims.l(8)
+            text: alarmDialog ? alarmDialog.title : ""
+        }
+
+        IconButton {
+            id: alarmDismiss
+            iconName: "ios-checkmark-circle-outline"
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+                leftMargin: Dims.iconButtonMargin
+            }
+            onClicked: {
+                feedback.stop()
+                if(alarmDialog) {
+                    alarmDialog.dismiss()
+                }
+                alarmHandler.dialogOnScreen = false
+                alarmActive = false
+                alarmObject = null
+                seconds = lastTimerDuration.value
+            }
+        }
+
+        IconButton {
+            id: alarmRepeat
+            iconName: "ios-refresh-circle-outline"
+            anchors {
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+                rightMargin: Dims.iconButtonMargin
+            }
+            onClicked: {
+                feedback.stop()
+                if(alarmDialog) {
+                    alarmDialog.enabled = true
+                    alarmDialog.save()
+                }
+                alarmHandler.dialogOnScreen = false
+                alarmActive = false
             }
         }
     }
